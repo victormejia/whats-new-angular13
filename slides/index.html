@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title></title>
+    <meta name="description" content="">
+    <meta name="author" content="Victor Mejia">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/main.css" id="theme">
+
+    <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700' rel='stylesheet' type='text/css'>
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/prism-flatland.css">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+      if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+      }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="reveal">
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h1>what's new in <span class="red">Angular 1.3</span></h1>
+          <p>
+            Created by <a href="http://victormejia.me">Victor Mejia</a>
+          </p>
+        </section>
+
+        <section>
+          <h2>about me</h2>
+          <p>Software Dev @ LoopNet (CoStar Group)</p>
+          <p>I ♥ JavaScript</p>
+          <hr />
+          <p>Tweeting <a href="https://twitter.com/victorczm">@victorczm</a></p>
+          <p>Coding <a href="https://github.com/victormejia/">@victormejia</a></p>
+          <p>Blogging @ <a href="http://victormejia.me">victormejia.me</a></p>
+        </section>
+
+        <section data-background="/img/surprised.gif">
+          <h2 class="lightblue">lots to be excited about</h2>
+        </section>
+
+        <section>
+          <h2>400+ bug fixes</h2>
+        </section>
+
+        <section>
+          <h2>~1,000 documentation fixes</h2>
+        </section>
+
+        <section>
+          <h2>performance</h2>
+          <h2>improvements</h2>
+          <ul>
+            <li class="fragment">reduced memory consumption</li>
+            <li class="fragment">increased performance of common DOM operations</li>
+            <li class="fragment">overall improvements</li>
+            <li class="fragment">benchmarks?</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>droppping IE8 support</h2>
+        </section>
+
+        <section>
+          <h2>400+ contributors</h2>
+        </section>
+
+        <section data-background="/img/timcook.jpg">
+          <h2 class="lightblue">it's the...</h2>
+        </section>
+
+        <section data-background="/img/timcook.jpg">
+          <h2 class="lightblue">best</h2>
+        </section>
+
+        <section data-background="/img/timcook.jpg">
+          <h2 class="lightblue">angular</h2>
+        </section>
+
+        <section data-background="/img/timcook.jpg">
+          <h2 class="lightblue">yet</h2>
+        </section>
+
+        <section>
+          <h2>awesome features</h2>
+          <ul>
+            <li class="fragment">Strict DI</li>
+            <li class="fragment">one-time bindings</li>
+            <li class="fragment">ngModelOptions</li>
+            <li class="fragment">new $validators pipeline and ngMessages</li>
+            <li class="fragment">ngAria</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Strict DI</h2>
+          <p>option for finding places in your app that won't minify correctly because of the DI syntax</p>
+        </section>
+
+        <section>
+        <h2>it's a directive</h2>
+        <pre><code class="language-markup">
+<div ng-app="myApp" ng-strict-di>
+  <div ng-controller="AppCtrl">{{message}}</div>
+</div>
+        </code></pre>
+        </section>
+
+        <section>
+          <h2>bad strict DI example</h2>
+          <pre><code class="language-javascript">
+angular.module('app', [])
+.controller('MyCtrl', function ($scope, $filter) {
+  $scope.message = "hello";
+});
+
+// that could be minified to this: what is a?
+angular.module('app', []).controller('MyCtrl', function (a, b) {a.message = "hello"; });            
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>the correct way</h2>
+          <pre><code class="language-javascript">
+angular.module('app', [])
+  .controller('AppCtrl', ['$scope', '$filter',
+    function ($scope, $filter) {
+      $scope.message = "hello";
+    }]);            
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>or like this</h2>
+          <pre><code class="language-javascript">
+function AppCtrl($scope, $http, $filter) {
+  // ...
+}
+
+AppCtrl.$inject = ["$scope", "$http", "$filter"];
+
+angular.module("myApp", [])
+.controller("AppCtrl", AppCtrl)            
+          </code></pre>
+        </section>
+
+
+        <section>
+          <h2>One-time Bindings</h2>
+          <p>prefix bindings with "::", then only interpolated once and no longer watched</p>
+        </section>
+
+        <section>
+          <h3>the end :)</h1>
+          <p><img src="img/snoopy.png" alt=""></p>
+          <p>© 2014 PEANUTS Worldwide LLC</p>
+        </section>
+
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="plugin/prism/prism.js"></script>
+    <script src="js/reveal.min.js"></script>
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+      // open links in new tab
+      var links = document.querySelectorAll('a');
+      for (var i = 0; i < links.length; i++) {
+        links[i].setAttribute('target', '_blank');
+      };
+    </script>
+
+  </body>
+</html>
