@@ -1,7 +1,7 @@
 ## one-time bindings
-  - [ ] give brief digest cycle overview
-  - [ ] code example of regular binding
-  - [ ] code example with one-time bindings
+  - [x] give brief digest cycle overview
+  - [x] code example of regular binding
+  - [x] code example with one-time bindings
 
 ## ngModel options
   - [ ] updateOn
