@@ -235,6 +235,120 @@ Hello, my name is {{::userName}}
         </section>
 
         <section>
+          <h2>awesome features</h2>
+          <ul>
+            <li>Strict DI</li>
+            <li>one-time bindings</li>
+            <li class="red">ngModelOptions</li>
+            <li>new $validators pipeline and ngMessages</li>
+            <li>ngAria</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>ngModelOptions</h2>
+          <p>allows us to control how ngModel updates are done</p>
+        </section>
+
+        <section>
+          <h2>some use cases</h2>
+          <p>update model (trigger $digest)...</p>
+          <ul>
+            <li>...after user stopped typing for 500 ms</li>
+            <li>...only when focus is removed</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>updating with updateOn</h2>
+          <pre><code class="language-markup">
+<!-- will only be updated when user removes focus -->
+<input type="text" ng-model="searchText" ng-model-options="{ updateOn : 'blur' }" />
+
+<!-- default update behavior and on blur -->
+<input type="text" ng-model="searchText" ng-model-options="{ updateOn : 'default blur' }" />
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>delaying the model update with debounce</h2>
+          <pre><code class="language-markup">
+<!-- model update delay of 300ms -->
+<input type="text" ng-model="searchText" ng-model-options="{ debounce : 300 }">
+Search: {{searchText}}
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>control debounce delay for specific events</h2>
+          <p>specify an object with either 'default' or 'blur' props</p>
+          <pre><code class="language-markup">
+<!-- model update delay of 300ms on user input, and immediately on blur -->
+<input type="text" ng-model="searchText" ng-model-options="{ debounce: { 'default': 300, 'blur': 0 } }">
+Search: {{searchText}}
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>model and view can get out of sync: use $rollbackViewValue</h3>
+          <ul>
+            <li>takes the value in model --> view</li>
+            <li>use it if you update the model and to cancel a debounce action</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>$rollbackViewValue usage (from the docs)</h2>
+          <pre><code class="language-markup">
+<div ng-controller="ExampleController">
+  <form name="userForm">
+    Name:
+    <input type="text" name="userName"
+           ng-model="user.name"
+           ng-model-options="{ debounce: 1000 }" />
+    <button ng-click="userForm.userName.$rollbackViewValue(); user.name=''">Clear</button><br />
+  </form>
+  <pre>user.name = <span ng-bind="user.name"></span></pre>
+</div>
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>getterSetter</h2>
+          <ul>
+            <li>boolean value</li>
+            <li>determines whether to treat the functions bound to ngModel as getters/setters</li>
+            <li>useful for models that have an internal representation that's different than what the model exposes</li>
+          </ul>
+        </section>
+
+        <section>
+          <pre><code data-trim class="language-javascript">
+var _age = 27;
+$scope.user = {
+  age: function (newAge) {
+    if (angular.isNumber(newAge) && newAge > 0) {
+      return ($scope.age = newAge);
+    }
+    return $scope.age;
+  }
+}
+          </code></pre>
+
+          <pre><code data-trim class="language-markup">
+<div ng-controller="ExampleController">
+  <form name="userForm">
+    Age:
+    <input type="text" name="userAge" ng-model="user.age"
+           ng-model-options="{ getterSetter: true }" />
+  </form>
+  user.age = <span ng-bind="user.age()"></span>
+</div>
+          </code></pre>
+        </section>
+
+
+        <section>
           <h3>the end :)</h1>
           <p><img src="img/snoopy.png" alt=""></p>
           <p>© 2014 PEANUTS Worldwide LLC</p>
