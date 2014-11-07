@@ -2,7 +2,9 @@
 
 ### Abstract
 This talk covers some of the new features in Angular 1.3.
- 
+
+View the [slides](http://victormejia.me/whats-new-angular13) (best viewed in Chrome).
+
 ### Hacking on this
 I'm using gulp for sass watching and live reloading. Run the following commands to work on this locally:
 
