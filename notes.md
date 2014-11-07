@@ -4,14 +4,13 @@
   - [x] code example with one-time bindings
 
 ## ngModel options
-  - [ ] updateOn
-  - [ ] debounce
-  - [ ] combine
-  - [ ] $rollbackViewValue
-
-http://blog.thoughtram.io/angularjs/2014/10/19/exploring-angular-1.3-ng-model-options.html
+  - [x] updateOn
+  - [x] debounce
+  - [x] combine
+  - [x] $rollbackViewValue
 
 ## $validators pipeline
+  - [x] slides and code
 
 ## Angular in the Future
   - [ ] AtScript, Angular 2.0 will be written in this

@@ -41,7 +41,9 @@
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
         <section>
-          <h1>what's new in <span class="red">Angular 1.3</span></h1>
+          <h2>what's new in</h2>
+          <h1 class="red">Angular 1.3</h1>
+          <br />
           <p>
             Created by <a href="http://victormejia.me">Victor Mejia</a>
           </p>
@@ -88,6 +90,16 @@
           <h2>400+ contributors</h2>
         </section>
 
+        <section>
+          <h2>awesome features</h2>
+          <ul>
+            <li class="fragment">Strict DI</li>
+            <li class="fragment">one-time bindings</li>
+            <li class="fragment">ngModelOptions</li>
+            <li class="fragment">new $validators pipeline and ngMessages</li>
+          </ul>
+        </section>
+
         <section data-background="/img/timcook.jpg">
           <h2 class="lightblue">it's the...</h2>
         </section>
@@ -103,15 +115,15 @@
         <section data-background="/img/timcook.jpg">
           <h2 class="lightblue">yet</h2>
         </section>
-
+        
         <section>
           <h2>awesome features</h2>
           <ul>
-            <li class="fragment">Strict DI</li>
-            <li class="fragment">one-time bindings</li>
-            <li class="fragment">ngModelOptions</li>
-            <li class="fragment">new $validators pipeline and ngMessages</li>
-            <li class="fragment">ngAria</li>
+            <li class="red">Strict DI</li>
+            <li>one-time bindings</li>
+            <li>ngModelOptions</li>
+            <li>new $validators pipeline and ngMessages</li>
+            <li>ngAria</li>
           </ul>
         </section>
 
@@ -167,6 +179,20 @@ angular.module("myApp", [])
           </code></pre>
         </section>
 
+        <section>
+          <h2>if you use <a href="https://github.com/olov/ng-annotate">ng-annotate</a>, don't worry about this</h2>
+        </section>
+
+        <section>
+          <h2>awesome features</h2>
+          <ul>
+            <li>Strict DI</li>
+            <li class="red">one-time bindings</li>
+            <li>ngModelOptions</li>
+            <li>new $validators pipeline and ngMessages</li>
+            <li>ngAria</li>
+          </ul>
+        </section>
 
         <section>
           <h2>One-time Bindings</h2>
@@ -314,6 +340,10 @@ Search: {{searchText}}
         </section>
 
         <section>
+          <h2>check out the <a href="http://jsbin.com/qajoku/2/edit?html,js,output">demo</a></h2>
+        </section>
+
+        <section>
           <h2>getterSetter</h2>
           <ul>
             <li>boolean value</li>
@@ -346,8 +376,200 @@ $scope.user = {
 </div>
           </code></pre>
         </section>
+        
 
+        <section>
+          <h2>awesome features</h2>
+          <ul>
+            <li>Strict DI</li>
+            <li>one-time bindings</li>
+            <li>ngModelOptions</li>
+            <li class="red">new $validators pipeline and ngMessages</li>
+          </ul>
+        </section>
 
+        <section>
+          <h2>Forms in Angular 1.3</h2>
+          <ul>
+            <li class="fragment">forms have greatly improved over 1.1 and 1.2</li>
+            <li class="fragment">lots of bugs for native HTML5 validators have been resolved</li>
+            <li class="fragment">new $validators pipeline, asynchronous validations</li>
+            <li class="fragment">combine with new ngMessages module for powerful forms</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>ngModelController</h2>
+          <p>manages the logic of passing values b/n DOM and scope and handles parsing, formatting, validation</p>
+          <pre><code class="language-markup">
+<input type="email" ng-model="data.email" required>
+          </code></pre>
+        </section>
+
+        <section>
+        <h2>wrap models inside a form, and name them</h2>
+        <pre><code data-trim class="language-markup">
+<form name="userForm">
+  <input type="email" name="email" minlength="8" ng-model="data.email" required>
+</form>
+        </code></pre>
+        </section>
+
+        <section>
+          <h2>we have access to validation errors</h2>
+          <pre><code class="language-javascript">
+// userForm.email.$error
+{
+  "email" : true
+  "required": false,
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>HTML5 Validations</h2>
+          <img src="/img/html5attr.png" alt="">
+           <p>src: <a href="http://www.yearofmoo.com/2014/09/taming-forms-in-angularjs-1-3.html">http://www.yearofmoo.com/2014/09/taming-forms-in-angularjs-1-3.html</a></p>
+        </section>
+
+        <section>
+          <img src="/img/inputvalidations.png" alt="">
+          <p>src: <a href="http://www.yearofmoo.com/2014/09/taming-forms-in-angularjs-1-3.html">http://www.yearofmoo.com/2014/09/taming-forms-in-angularjs-1-3.html</a></p>
+        </section>
+
+        <section>
+          <h2>ngModel validations</h2>
+          <ul>
+            <li>in 1.3, consistent job of handling parsing first</li>
+            <li>type before attribute</li>
+            <li>example: type "email" before "minlength"</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h2>other props on ngModel</h2>
+          <ul>
+            <li class="fragment">ngModel.$dirty: control has been interacted with</li>
+            <li class="fragment">ngModel.$touched: control has been blurred</li>
+            <li class="fragment">ngModel.$valid: model is valid</li>
+            <li class="fragment">ngModel.$invalid: model is invalid</li>
+          </ul>
+        </section>
+        <section>
+          <h3>displaying errors with ngMessages</h3>
+          <pre><code class="language-markup">
+<form name="userForm"><input type="email" ng-model="data.email" required></form>
+<div ng-if="userForm.$submitted || userForm.email.$touched" ng-messages="userForm.email.$error" class="errors">
+  <div ng-message="required">You did not enter an email.</div>
+  <div ng-message="required">You did not enter a valid email.</div>
+</div>
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>custom validators</h2>
+          <pre><code class="language-javascript">
+//
+// <input type="text" custom-validator ng-model="myModel" />
+//
+app.directive('customValidator', function() {
+  require : 'ngModel',
+  link : function(scope, element, attrs, ngModel) {
+    ngModel.$validators.myValidator = function() { 
+      // return true or false
+    }
+  } 
+});
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>$asyncValidators</h2>
+          <p>return a promise</p>
+          <pre><code class="language-javascript">
+ngModule.directive('usernameAvailableValidator', ['$http', function($http) {
+  return {
+    require : 'ngModel',
+    link : function($scope, element, attrs, ngModel) {
+      ngModel.$asyncValidators.usernameAvailable = function(username) {
+        return $http.get('/api/username-exists?u='+ username);
+      };
+    }
+  }
+}])
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>$asyncValidators</h2>
+          <ul>
+            <li class="fragment">true when promise resolved, false when promise rejected</li>
+            <li class="fragment">for $http calls, codes between 200-299 will resolve</li>
+            <li class="fragment">normal validations are run first to minimize backend calls</li>
+            <li class="fragment">we have access to ngModel.$pending to show loading indicators</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>submit form only if valid</h3>
+          <pre><code class="language-markup">
+<form name="userForm" ng-submit="submit(userForm.$valid)">
+  <input type="email" name="email" minlength="8" ng-model="data.email" required>
+</form>
+          </code></pre>
+          <pre><code class="language-javascript">
+$scope.submit = function (valid) {
+  if (!valid) return;
+  
+  $http.post(...)
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h1 class="red">Angular 2.0</h1>
+        </section>
+
+        <section>
+          <img src="/img/brianfordtweet.png" alt="">
+        </section>
+
+        <section>
+          <h2>"the road to ember 2.0"</h2>
+          <a href="https://github.com/emberjs/rfcs/pull/15">https://github.com/emberjs/rfcs/pull/15</a>
+        </section>
+
+        <section>
+          <img src="/img/tomdaletweet.png" alt="">
+        </section>
+
+        <section>
+          <h2>stuff to read</h2>
+          <ul>
+            <li><a href="https://medium.com/@jeffwhelpley/screw-you-angular-62b3889fd678">"Screw You, Angular"</a>, by Jeff Whelpley</li>
+            <li><a href="http://eisenbergeffect.bluespire.com/all-about-angular-2-0/">All About Angular 2.0</a>, by Rob Eisenberg (creator of Durandal, now core team member)</li>
+            <li><a href="http://onehungrymind.com/10-things-consider-keeping-level-head-angularjs-2-0/">10 Things To Consider While Keeping a Level Head About AngularJS 2.0</a>, by Lukas Ruebbelke</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>stuff to watch</h2>
+          <ul>
+            <li><a href="https://www.youtube.com/watch?v=lGdnh8QSPPk">ng-europe 2014 Keynote on AtScript</a> - Misko Hevery</li>
+            <li><a href="https://www.youtube.com/watch?v=gNmWybAyBHI">Angular 2.0 Core</a> @ ng-europe 2014</li>
+            <li><a href="https://www.youtube.com/watch?v=g-x1QKriY90">Q&A on 2.0, AtScript</a> @ ng-europe 2014</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>HUGE thanks to all these resources</h2>
+          <ul>
+            <li><a href="http://www.yearofmoo.com/2014/09/taming-forms-in-angularjs-1-3.html">http://www.yearofmoo.com/2014/09/taming-forms-in-angularjs-1-3.html</a></li>
+            <li><a href="http://blog.thoughtram.io/angularjs/2014/10/19/exploring-angular-1.3-ng-model-options.html">Exploring ngModelOptions</a></li>
+            <li><a href="http://blog.thoughtram.io/angularjs/2014/10/14/exploring-angular-1.3-one-time-bindings.html">Exploring one-time bindings</a></li>
+          </ul>
+        </section>
+        
         <section>
           <h3>the end :)</h1>
           <p><img src="img/snoopy.png" alt=""></p>
