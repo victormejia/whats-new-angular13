@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title></title>
+    <meta name="description" content="">
+    <meta name="author" content="Victor Mejia">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/main.css" id="theme">
+
+    <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700' rel='stylesheet' type='text/css'>
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/prism-flatland.css">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+      if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+      }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="reveal">
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h2>what's new in</h2>
+          <h1 class="red">Angular 1.3</h1>
+          <br />
+          <p>
+            Created by <a href="http://victormejia.me">Victor Mejia</a>
+          </p>
+        </section>
+
+        <section>
+          <h2>about me</h2>
+          <p>Software Dev @ LoopNet (CoStar Group)</p>
+          <p>I ♥ JavaScript</p>
+          <hr />
+          <p>Tweeting <a href="https://twitter.com/victorczm">@victorczm</a></p>
+          <p>Coding <a href="https://github.com/victormejia/">@victormejia</a></p>
+          <p>Blogging @ <a href="http://victormejia.me">victormejia.me</a></p>
+        </section>
+
+        <section data-background="/img/surprised.gif">
+          <h2 class="lightblue">lots to be excited about</h2>
+        </section>
+
+        <section>
+          <h2>400+ bug fixes</h2>
+        </section>
+
+        <section>
+          <h2>~1,000 documentation fixes</h2>
+        </section>
+
+        <section>
+          <h2>performance</h2>
+          <h2>improvements</h2>
+          <ul>
+            <li class="fragment">reduced memory consumption</li>
+            <li class="fragment">increased performance of common DOM operations</li>
+            <li class="fragment">overall improvements</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>droppping IE8 support</h2>
+        </section>
+
+        <section>
+          <h2>400+ contributors</h2>
+        </section>
+
+        <section>
+          <h2>awesome features</h2>
+          <ul>
+            <li class="fragment">Strict DI</li>
+            <li class="fragment">one-time bindings</li>
+            <li class="fragment">ngModelOptions</li>
+            <li class="fragment">new $validators pipeline and ngMessages</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h2>awesome features</h2>
+          <ul>
+            <li class="red">Strict DI</li>
+            <li>one-time bindings</li>
+            <li>ngModelOptions</li>
+            <li>new $validators pipeline and ngMessages</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Strict DI</h2>
+          <p>option for finding places in your app that won't minify correctly because of the DI syntax</p>
+        </section>
+
+        <section>
+        <h2>it's a directive</h2>
+        <pre><code class="language-markup">
+<div ng-app="myApp" ng-strict-di>
+  <div ng-controller="AppCtrl">{{message}}</div>
+</div>
+        </code></pre>
+        </section>
+
+        <section>
+          <h2>bad strict DI example</h2>
+          <pre><code class="language-javascript">
+angular.module('app', [])
+.controller('MyCtrl', function ($scope, $filter) {
+  $scope.message = "hello";
+});
+
+// that could be minified to this: what is a?
+angular.module('app', []).controller('MyCtrl', function (a, b) {a.message = "hello"; });            
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>the correct way</h2>
+          <pre><code class="language-javascript">
+angular.module('app', [])
+  .controller('AppCtrl', ['$scope', '$filter',
+    function ($scope, $filter) {
+      $scope.message = "hello";
+    }]);            
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>or like this</h2>
+          <pre><code class="language-javascript">
+function AppCtrl($scope, $http, $filter) {
+  // ...
+}
+
+AppCtrl.$inject = ["$scope", "$http", "$filter"];
+
+angular.module("myApp", [])
+.controller("AppCtrl", AppCtrl)            
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>if you use <a href="https://github.com/olov/ng-annotate">ng-annotate</a>, don't worry about this</h2>
+        </section>
+
+        <section>
+          <h2>awesome features</h2>
+          <ul>
+            <li>Strict DI</li>
+            <li class="red">one-time bindings</li>
+            <li>ngModelOptions</li>
+            <li>new $validators pipeline and ngMessages</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>One-time Bindings</h2>
+          <p>prefix bindings with "::", then only interpolated once and no longer watched</p>
+        </section>
+
+        <section>
+          <h2>the classic angular "hello world" example</h2>
+          <pre><code class="language-markup">
+<!-- view is updated immediately -->
+<input type="text" ng-model="userName" />
+Hello, my name is {{userName}}
+          </code></pre>
+        </section>
+        
+        <section>
+          <h2>watchers</h2>
+          <ul>
+            <li>registered through directives</li>
+            <li>ng-repeat, ng-click, ng-model, ...</li>
+            <li><code>{{userName}}</code> is an interpolation directive</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>two-way data binding</h2>
+          <ul>
+            <li>when $digest cylce is triggered, Angular process all registered watchers on scope, checking for model mutations</li>
+            <li>when $digest loop is done, browser re-renders the DOM and reflects the changes</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>it's very easy to have a lot of watchers</h2>
+          <h2><a href="http://jsbin.com/hezayi/8/edit?html,js,output">demo</a></h2>
+        </section>
+
+        <section>
+          <h2>one-time bindings</h2>
+          <h4>from the docs:</h4>
+          <blockquote>
+            "one-time expressions will stop recalculating once they are stable, which happens after the first digest if the expression result is a non-undefined value"
+          </blockquote>
+        </section>
+
+        <section>
+          <h2>usage</h2>
+          <pre><code class="language-markup">
+<!-- view will updated only after the first keystroke -->
+<input type="text" ng-model="userName" />
+Hello, my name is {{::userName}}
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>try the demo, adding the "::"</h2>
+          <h2><a href="http://jsbin.com/hezayi/8/edit?html,js,output">demo</a></h2>
+        </section>
+
+        <section>
+          <h2>resources on one-time bindings</h2>
+          <ul>
+            <li><a href="https://docs.angularjs.org/guide/expression">Angular Docs</a></li>
+            <li><a href="http://blog.thoughtram.io/angularjs/2014/10/14/exploring-angular-1.3-one-time-bindings.html">http://blog.thoughtram.io</a></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>awesome features</h2>
+          <ul>
+            <li>Strict DI</li>
+            <li>one-time bindings</li>
+            <li class="red">ngModelOptions</li>
+            <li>new $validators pipeline and ngMessages</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>ngModelOptions</h2>
+          <p>allows us to control how ngModel updates are done</p>
+        </section>
+
+        <section>
+          <h2>some use cases</h2>
+          <p>update model (trigger $digest)...</p>
+          <ul>
+            <li>...after user stopped typing for 500 ms</li>
+            <li>...only when focus is removed</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>updating with updateOn</h2>
+          <pre><code class="language-markup">
+<!-- will only be updated when user removes focus -->
+<input type="text" ng-model="searchText" ng-model-options="{ updateOn : 'blur' }" />
+
+<!-- default update behavior and on blur -->
+<input type="text" ng-model="searchText" ng-model-options="{ updateOn : 'default blur' }" />
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>delaying the model update with debounce</h2>
+          <pre><code class="language-markup">
+<!-- model update delay of 300ms -->
+<input type="text" ng-model="searchText" ng-model-options="{ debounce : 300 }">
+Search: {{searchText}}
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>control debounce delay for specific events</h2>
+          <p>specify an object with either 'default' or 'blur' props</p>
+          <pre><code class="language-markup">
+<!-- model update delay of 300ms on user input, and immediately on blur -->
+<input type="text" ng-model="searchText" ng-model-options="{ debounce: { 'default': 300, 'blur': 0 } }">
+Search: {{searchText}}
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>model and view can get out of sync: use $rollbackViewValue</h3>
+          <ul>
+            <li>takes the value in model --> view</li>
+            <li>use it if you update the model and to cancel a debounce action</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>$rollbackViewValue usage (from the docs)</h2>
+          <pre><code class="language-markup">
+<div ng-controller="ExampleController">
+  <form name="userForm">
+    Name:
+    <input type="text" name="userName"
+           ng-model="user.name"
+           ng-model-options="{ debounce: 1000 }" />
+    <button ng-click="userForm.userName.$rollbackViewValue(); user.name=''">Clear</button><br />
+  </form>
+  <pre>user.name = <span ng-bind="user.name"></span></pre>
+</div>
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>check out the <a href="http://jsbin.com/qajoku/7/edit?html,js,output">demo</a></h2>
+        </section>
+
+        <section>
+          <h2>getterSetter</h2>
+          <ul>
+            <li>boolean value</li>
+            <li>determines whether to treat the functions bound to ngModel as getters/setters</li>
+            <li>useful for models that have an internal representation that's different than what the model exposes</li>
+          </ul>
+        </section>
+
+        <section>
+          <pre><code data-trim class="language-javascript">
+var _age = 27;
+$scope.user = {
+  age: function (newAge) {
+    if (angular.isNumber(newAge) && newAge > 0) {
+      return ($scope.age = newAge);
+    }
+    return $scope.age;
+  }
+}
+          </code></pre>
+
+          <pre><code data-trim class="language-markup">
+<div ng-controller="ExampleController">
+  <form name="userForm">
+    Age:
+    <input type="text" name="userAge" ng-model="user.age"
+           ng-model-options="{ getterSetter: true }" />
+  </form>
+  user.age = <span ng-bind="user.age()"></span>
+</div>
+          </code></pre>
+        </section>
+        
+
+        <section>
+          <h2>awesome features</h2>
+          <ul>
+            <li>Strict DI</li>
+            <li>one-time bindings</li>
+            <li>ngModelOptions</li>
+            <li class="red">new $validators pipeline and ngMessages</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Forms in Angular 1.3</h2>
+          <ul>
+            <li class="fragment">forms have greatly improved over 1.1 and 1.2</li>
+            <li class="fragment">lots of bugs for native HTML5 validators have been resolved</li>
+            <li class="fragment">new $validators pipeline, asynchronous validations</li>
+            <li class="fragment">combine with new ngMessages module for powerful forms</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>ngModelController</h2>
+          <p>manages the logic of passing values b/n DOM and scope and handles parsing, formatting, validation</p>
+          <pre><code class="language-markup">
+<input type="email" ng-model="data.email" required>
+          </code></pre>
+        </section>
+
+        <section>
+        <h2>wrap models inside a form, and name them</h2>
+        <pre><code data-trim class="language-markup">
+<form name="userForm">
+  <input type="email" name="email" minlength="8" ng-model="data.email" required>
+</form>
+        </code></pre>
+        </section>
+
+        <section>
+          <h2>we have access to validation errors</h2>
+          <pre><code class="language-javascript">
+// userForm.email.$error
+{
+  "email" : true
+  "required": false,
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>HTML5 Validations</h2>
+          <img src="/img/html5attr.png" alt="">
+           <p>src: <a href="http://www.yearofmoo.com/2014/09/taming-forms-in-angularjs-1-3.html">http://www.yearofmoo.com/2014/09/taming-forms-in-angularjs-1-3.html</a></p>
+        </section>
+
+        <section>
+          <img src="/img/inputvalidations.png" alt="">
+          <p>src: <a href="http://www.yearofmoo.com/2014/09/taming-forms-in-angularjs-1-3.html">http://www.yearofmoo.com/2014/09/taming-forms-in-angularjs-1-3.html</a></p>
+        </section>
+
+        <section>
+          <h2>ngModel validations</h2>
+          <ul>
+            <li>in 1.3, consistent job of handling parsing first</li>
+            <li>type before attribute</li>
+            <li>example: type "email" before "minlength"</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h2>other props on ngModel</h2>
+          <ul>
+            <li class="fragment">ngModel.$dirty: control has been interacted with</li>
+            <li class="fragment">ngModel.$touched: control has been blurred</li>
+            <li class="fragment">ngModel.$valid: model is valid</li>
+            <li class="fragment">ngModel.$invalid: model is invalid</li>
+          </ul>
+        </section>
+        <section>
+          <h3>displaying errors with ngMessages</h3>
+          <pre><code class="language-markup">
+<form name="userForm"><input type="email" ng-model="data.email" required></form>
+<div ng-if="userForm.$submitted || userForm.email.$touched" ng-messages="userForm.email.$error" class="errors">
+  <div ng-message="required">You did not enter an email.</div>
+  <div ng-message="required">You did not enter a valid email.</div>
+</div>
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>$validators</h2>
+          <pre><code class="language-javascript">
+//
+// <input type="text" custom-validator ng-model="myModel" />
+//
+app.directive('customValidator', function() {
+  require : 'ngModel',
+  link : function(scope, element, attrs, ngModel) {
+    ngModel.$validators.myValidator = function() { 
+      // return true or false
+    }
+  } 
+});
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>$asyncValidators</h2>
+          <p>return a promise</p>
+          <pre><code class="language-javascript">
+ngModule.directive('usernameAvailableValidator', ['$http', function($http) {
+  return {
+    require : 'ngModel',
+    link : function($scope, element, attrs, ngModel) {
+      ngModel.$asyncValidators.usernameAvailable = function(username) {
+        return $http.get('/api/username-exists?u='+ username);
+      };
+    }
+  }
+}])
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>$asyncValidators</h2>
+          <ul>
+            <li class="fragment">true when promise resolved, false when promise rejected</li>
+            <li class="fragment">for $http calls, codes between 200-299 will resolve</li>
+            <li class="fragment">normal validations are run first to minimize backend calls</li>
+            <li class="fragment">we have access to ngModel.$pending to show loading indicators</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>submit form only if valid</h3>
+          <pre><code class="language-markup">
+<form name="userForm" ng-submit="submit(userForm.$valid)">
+  <input type="email" name="email" minlength="8" ng-model="data.email" required>
+</form>
+          </code></pre>
+          <pre><code class="language-javascript">
+$scope.submit = function (valid) {
+  if (!valid) return;
+  
+  $http.post(...)
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h1 class="red">Angular 2.0</h1>
+        </section>
+
+        <section>
+          <h2>lots of announcements at ng-europe 2014</h2>
+          <h3>AtScript</h3>
+          <h3>Angular 2.0</h3>
+        </section>
+
+        <section data-background="/img/atscript01.png"></section>
+        <section data-background="/img/atscript02.png"></section>
+        <section data-background="/img/atscript03.png"></section>
+        <section data-background="/img/atscript04.png"></section>
+        <section data-background="/img/atscript05.png"></section>
+        <section data-background="/img/atscript06.png"></section>
+
+        <section data-background="/img/angular2-01.png"></section>
+        <section data-background="/img/angular2-02.png"></section>
+        <section data-background="/img/angular2-03.png"></section>
+        <section data-background="/img/angular2-04.png"></section>
+        <section data-background="/img/angular2-05.png"></section>
+        
+        <section>
+          <img src="/img/brianfordtweet.png" alt="">
+        </section>
+
+        <section>
+          <h2>"the road to ember 2.0"</h2>
+          <a href="https://github.com/emberjs/rfcs/pull/15">https://github.com/emberjs/rfcs/pull/15</a>
+        </section>
+
+        <section>
+          <img src="/img/tomdaletweet.png" alt="">
+        </section>
+
+        <section>
+          <h2>stuff to read</h2>
+          <ul>
+            <li><a href="https://medium.com/@jeffwhelpley/screw-you-angular-62b3889fd678">"Screw You, Angular"</a>, by Jeff Whelpley</li>
+            <li><a href="http://eisenbergeffect.bluespire.com/all-about-angular-2-0/">All About Angular 2.0</a>, by Rob Eisenberg (creator of Durandal, now core team member)</li>
+            <li><a href="http://onehungrymind.com/10-things-consider-keeping-level-head-angularjs-2-0/">10 Things To Consider While Keeping a Level Head About AngularJS 2.0</a>, by Lukas Ruebbelke</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>stuff to watch</h2>
+          <ul>
+            <li><a href="https://www.youtube.com/watch?v=lGdnh8QSPPk">ng-europe 2014 Keynote on AtScript</a> - Misko Hevery</li>
+            <li><a href="https://www.youtube.com/watch?v=gNmWybAyBHI">Angular 2.0 Core</a> @ ng-europe 2014</li>
+            <li><a href="https://www.youtube.com/watch?v=g-x1QKriY90">Q&A on 2.0, AtScript</a> @ ng-europe 2014</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>HUGE thanks to all these resources</h2>
+          <ul>
+            <li><a href="http://www.yearofmoo.com/2014/09/taming-forms-in-angularjs-1-3.html">http://www.yearofmoo.com/2014/09/taming-forms-in-angularjs-1-3.html</a></li>
+            <li><a href="http://blog.thoughtram.io/angularjs/2014/10/19/exploring-angular-1.3-ng-model-options.html">Exploring ngModelOptions</a></li>
+            <li><a href="http://blog.thoughtram.io/angularjs/2014/10/14/exploring-angular-1.3-one-time-bindings.html">Exploring one-time bindings</a></li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>the end :)</h1>
+          <p><img src="img/snoopy.png" alt=""></p>
+          <p>© 2014 PEANUTS Worldwide LLC</p>
+        </section>
+
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="plugin/prism/prism.js"></script>
+    <script src="js/reveal.min.js"></script>
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+      // open links in new tab
+      var links = document.querySelectorAll('a');
+      for (var i = 0; i < links.length; i++) {
+        links[i].setAttribute('target', '_blank');
+      };
+    </script>
+
+  </body>
+</html>
